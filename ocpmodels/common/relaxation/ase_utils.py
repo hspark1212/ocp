@@ -156,6 +156,12 @@ class OCPCalculator(Calculator):
         if "normalizer" not in config:
             del config["dataset"]["src"]
             config["normalizer"] = config["dataset"]
+        print(config["model"]["scale_file"])
+        # modify path of scaling factors
+        if config["model"]["scale_file"].startswith("configs"):
+            config["model"]["scale_file"] = (
+                "ml_dac/lib/ocp/" + config["model"]["scale_file"]
+            )
 
         self.trainer = registry.get_trainer_class(
             config.get("trainer", "energy")

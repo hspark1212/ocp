@@ -394,6 +394,13 @@ def load_config(path: str, previous_includes: list = []):
     duplicates_error = []
 
     for include in includes:
+        if include.startswith("configs"):
+            include = "ml_dac/lib/ocp/" + include  # s2ef
+        elif include.startswith("odac"):
+            include = "ml_dac/lib/ocp/" + include.replace(
+                "odac/configs", "configs/odac"
+            )  # is2re
+
         include_config, inc_dup_warning, inc_dup_error = load_config(
             include, previous_includes
         )
